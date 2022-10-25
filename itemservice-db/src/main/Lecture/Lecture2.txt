@@ -1,0 +1,38 @@
+데이터 접근 기술 - 스프링 JdbcTemplate
+    JdbcTemplate 소개와 설정
+        장점
+            설정의 편리함
+            반복 문제 해결
+        단점
+            동적 SQL 처리의 어려움
+
+    JdbcTemplate 적용 1 - 기본
+        queryForObject()는결과 로우가 하나일 때 사용한다. 결과가 없거나, 둘 이상이면 예외가 발생한다.
+
+        동적 쿼리란??? 왜 sql mapper는 동적으로 작성하기가 어려운가???
+
+        JdbcTemplate을 사용할 때 생성자에 dataSource를 의존관계 주입받고 내부에서 JdbcTemplate을 생성하는데
+        관례상 이 방법을 많이 사용한다.
+
+        insert, update, delete 같이 데이터를 변경할때는 template.update()를 사용한다.
+
+        PK인 아이디값을 개발자가 직접 지정하는것이 아니라
+        비워두고 저장해야 데이터베이스가 대신 생성해서 넣어준다.
+
+        itemRowMapper()는 데이터베이스의 조회결과를 객체로 변환할 때 사용한다.
+        JDBC를 직접 사용할 때 ResultSet을 사용했던 부분과 비슷하다.
+
+    JdbcTemplate 적용 2 - 동적 쿼리 문제
+        ★findAll()에서 가장 어려운점은 사용자가 검색하는 값에 따라서 실행하는 sql이 동적으로 달라져야한다는점이다!!!
+
+        결과적으로 2개의 검색조건이 있으므로 총 4가지 상황에 따른 sql을 동적으로 생성해야 한다.
+
+        MyBatis의 가장 큰 장점은 동적 쿼리를 쉽게 작성할 수 있다!
+
+    JdbcTemplate 적용 3 - 구성과 실행
+        application.properties에 url,username,password를 입력하고
+        ItemServiceApplication에서 @Import를 통해 JdbcTemplateConfig를 가져온다.
+        이렇게 설정하면 스프링 부트가 해당 설정을 사용해서 커넥션 풀과 DataSource, 트랜잭션 매니저를 스프링 빈으로 자동 등록한다.
+
+        로그를 보기위해 설정 정보를 추가할 수 있는데 main과 test 나뉜다!
+    JdbcTemplate - 이름 지정 파라미터 1
